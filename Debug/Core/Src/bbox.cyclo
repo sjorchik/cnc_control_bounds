@@ -1,0 +1,13 @@
+../Core/Src/bbox.c:66:13:finish	2
+../Core/Src/bbox.c:79:13:parse_bounds	9
+../Core/Src/bbox.c:98:13:has_g91	5
+../Core/Src/bbox.c:108:13:try_bounds	7
+../Core/Src/bbox.c:121:13:strip_comments	4
+../Core/Src/bbox.c:135:13:tokenize	19
+../Core/Src/bbox.c:163:13:start_full_fallback	1
+../Core/Src/bbox.c:175:13:strip_json_frag	6
+../Core/Src/bbox.c:185:13:bbox_line	19
+../Core/Src/bbox.c:242:6:bbox_start	3
+../Core/Src/bbox.c:265:6:bbox_tick	4
+../Core/Src/bbox.c:271:6:bbox_cancel	2
+../Core/Src/bbox.c:275:15:bbox_get	1

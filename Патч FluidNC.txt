@@ -1,0 +1,25 @@
+----------------Команда часткового читання $ESP222-------------------
+ Функція fileShowSome вже існує у файлі FluidNC/src/FileCommands.cpp. 
+Вона читає лише вказану кількість рядків і віддає їх у форматі JSON. 
+Це вирішує проблему блокування ESP32, не вимагає відправки 0x18, 
+не викликає Soft Reset і, відповідно, не генерує банер [MSG:RESET], 
+який потім треба "відфільтровувати" на STM32.
+     Патч FluidNC
+Відкрийте файл FluidNC/src/FileCommands.cpp (близько 688-го рядка) і знайдіть блок реєстрації команд:
+
+    new WebCommand("path", WEBCMD, WU, NULL, "File/ShowSome", fileShowSome);
+    new WebCommand("path", WEBCMD, WU, "ESP221", "SD/Show", showSDFile);
+	
+Просто додайте alias ESP222 для першого рядка:
+
+    new WebCommand("path", WEBCMD, WU, "ESP222", "File/ShowSome", fileShowSome);
+    new WebCommand("path", WEBCMD, WU, "ESP221", "SD/Show", showSDFile);
+	
+Як це працює:
+Тепер ви можете надіслати з STM32 команду:
+$ESP222=50,sd/<ім'я_файлу>\r\n
+ESP32 миттєво (за мілісекунди) прочитає перші 50 рядків файлу і відповість JSON-рядком виду:
+{"FileLines":{"file_lines":["...","; Bounds: X0 Y0 to X108 Y96","..."],"path":"sd/file.nc","firstline":0}}\nok
+Оскільки заголовок LightBurn ; Bounds: зазвичай знаходиться в перших 10-20 рядках,
+50 рядків більш ніж достатньо. Ви просто шукаєте підрядок "; Bounds:" у вхідному 
+потоці UART (JSON-обгортка цьому не завадить, бо це простий пошук підстроки).
