@@ -14,6 +14,9 @@
 
     new WebCommand("path", WEBCMD, WU, "ESP222", "File/ShowSome", fileShowSome);
     new WebCommand("path", WEBCMD, WU, "ESP221", "SD/Show", showSDFile);
+
+Збірка: pio run -e wifi 
+Готовий файл буде в .pio/build/wifi/firmware.bin.
 	
 Як це працює:
 Тепер ви можете надіслати з STM32 команду:
